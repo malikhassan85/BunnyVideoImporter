@@ -1,0 +1,67 @@
+﻿@page
+@namespace Bunny_Video_Importer.Models
+@model Bunny_Video_Importer.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<div class="text-center">
+    <h2 class="display-4">Welcome to Bunny Video Importer</h2>
+</div>
+@if(ViewData["result"] is not null)
+{
+    TransferVideoResult result = ViewData["result"] as TransferVideoResult;
+    if(result.StatusCode == 200)
+    {
+        <div class="alert alert-success" role="alert">
+            @result.TransferResult
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            @result.TransferResult
+        </div>
+    }
+}
+@if(ViewData["message"] is not null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewData["message"]
+    </div>
+}
+<form method="post">
+    <div class="mb-3">
+        <label for="videTitleInput" class="form-label">Video Title *</label>
+        <input asp-for="VideoTransfer!.VideoTitle" type="text" class="form-control" id="videoTitleInput" aria-describedby="videoTitleInputHelp">
+        <div id="videoTitleInputHelp" class="form-text">A title for the video. This is the title that will appear on Bunny</div>
+    </div>
+    <div class="mb-3">
+        <label for="videoSourceUrlInput" class="form-label">Video Source Url *</label>
+        <input asp-for="VideoTransfer!.VideSourceUrl" type="text" class="form-control" id="videoSourceUrlInput" aria-describedby="videoSourceUrlHelp">
+        <div id="videoSourceUrlHelp" class="form-text">The video source. This should be a publicly accessable Url</div>
+    </div>
+    <div class="mb-3">
+        <label for="videoThumbnailTimeInSecondsInput" class="form-label">Thumbnail Time in Seconds</label>
+        <input asp-for="VideoTransfer!.VideThumbnailTimeInSeconds" type="text" pattern="[0-9]{1,}" class="form-control" id="videoThumbnailTimeInSecondsInput" aria-describedby="videoThumbnailTimeInSecondsHelp">
+        <div id="videoThumbnailTimeInSecondsHelp" class="form-text">This is the time in the video to take the thumbnail (in seconds).</div>
+    </div>
+    <div class="mb-3">
+        <label for="destinationVideoLibraryCollectionId" class="form-label">Bunny Video Library Collection Id</label>
+        <input asp-for="VideoTransfer!.DestinationVideoLibraryCollectionId" type="text"  class="form-control" id="destinationVideoLibraryCollectionId" aria-describedby="destinationVideoLibraryCollectionIdHelp">
+        <div id="destinationVideoLibraryCollectionIdHelp" class="form-text">This is the bunny video collection Id under the library.</div>
+    </div>
+    <div class="mb-3">
+        <label for="destinationVideoLibraryId" class="form-label">Bunny Video Library Id *</label>
+        <input asp-for="VideoTransfer!.DestinationVideoLibraryId" type="text" pattern="[0-9]{1,}" class="form-control" id="destinationVideoLibraryId" aria-describedby="destinationVideoLibraryIdHelp">
+        <div id="destinationVideoLibraryIdHelp" class="form-text">This is the bunny video library Id. It wil appear under the library information on Bunny</div>
+    </div>
+    <div class="mb-3">
+        <label for="destinationVideoLibraryAPIKey" class="form-label">Bunny Video Library API Key *</label>
+        <input asp-for="VideoTransfer!.DestinationVideoLibraryAPIKey" type="text"  class="form-control" id="destinationVideoLibraryAPIKey" aria-describedby="destinationVideoLibraryAPIKeyHelp">
+        <div id="destinationVideoLibraryAPIKeyHelp" class="form-text">This is the bunny video library API Key Id. It wil appear under the library information on Bunny</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
